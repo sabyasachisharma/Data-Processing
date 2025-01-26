@@ -1,7 +1,19 @@
-media/files/
+# Virtual environment
+venv/
+
+# Python files
+*.pyc
 __pycache__/
-**/migrations
+
+# Media and static files
+media/
+static/
+
+# Django files
 *.sqlite3
+
+# System files
+.DS_Store
+.idea/
+.vscode/
 *.log
-*.temp
-.idea

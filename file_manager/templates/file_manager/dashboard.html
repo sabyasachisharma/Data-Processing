@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Dashboard</title>
+</head>
+<body>
+    <h1>Uploaded Files</h1>
+    <table border="1">
+        <tr>
+            <th>File Name</th>
+            <th>Uploaded At</th>
+            <th>Download</th>
+        </tr>
+        {% for file in files %}
+        <tr>
+            <td>{{ file.file.name }}</td>
+            <td>{{ file.uploaded_at }}</td>
+            <td><a href="{% url 'file_download' file.id %}">Download</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Data Preview</h2>
+    <form method="get">
+        <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}">
+        <button type="submit">Search</button>
+    </form>
+    <table border="1">
+        <tr>
+            {% if data %}
+            {% for header in data.0.keys %}
+            <th>{{ header }}</th>
+            {% endfor %}
+            {% endif %}
+        </tr>
+        {% for row in data %}
+        <tr>
+            {% for value in row.values %}
+            <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        {% if data.has_previous %}
+        <a href="?page={{ data.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% if data.has_next %}
+        <a href="?page={{ data.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+    <a href="{% url 'file_upload' %}">Upload More Files</a>
+</body>
+</html>
